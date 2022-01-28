@@ -55,14 +55,14 @@ export default {
   },
   methods: {
     async findThumbs(){
-      this.thumbs = await loadFromDir(this.parent, /.+\.thumb\.png/);
+      this.thumbs = await loadFromDir(this.parent, /.+\.thumb\.webp/);
     },
     async openDir() {
       this.parent = await window.showDirectoryPicker();
       if (!this.parent) {
         return;
       }
-      this.files = await loadFromDir(this.parent, /.+\.png/, /.+\.thumb\.png/);
+      this.files = await loadFromDir(this.parent, /.+\.(png|jpg|jpeg)/, /.+\.thumb\.webp/);
       this.findThumbs()
     },
     async loadCropper(f){
@@ -80,19 +80,19 @@ export default {
       // 何か解像度が低い
       // https://github.com/fengyuanchen/cropperjs/issues/372
       cropper.getCroppedCanvas({
-        width: 300,
-        height: 300,
-        minWidth: 300,
-        minHeight: 300,
+        width: 600,
+        height: 600,
+        minWidth: 600,
+        minHeight: 600,
         maxWidth: 4096,
         maxHeight: 4096,
         fillColor: '#fff',
         imageSmoothingEnabled: true,
         imageSmoothingQuality: 'high',
       }).toBlob(async (blob)=>{
-        await saveImageData(blob, this.parent, this.editing.name.replace(/\.png/, ".thumb.png"))
+        await saveImageData(blob, this.parent, this.editing.name + ".thumb.webp")
         await this.findThumbs()
-      })
+      }, "image/webp", 0.7)
     }
   },
   computed: {
