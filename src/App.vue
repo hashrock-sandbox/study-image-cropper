@@ -9,4 +9,18 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style>
+body, html{
+  height: 100%;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+#app{
+  height: 100%;
+  display: flex;
+}
+
 </style>

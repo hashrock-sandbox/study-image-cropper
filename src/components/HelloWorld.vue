@@ -1,17 +1,20 @@
 <template>
-  <button @click="openDir">Open Dir</button>
-  <img id="image" />
-  <div v-if="editing">
+  <div class="file-pane">
+    <button @click="openDir">Open Dir</button>
     <div>
-      <button @click="crop">Save Thumbnail</button>
+      <div class="item" v-for="(file, i) in files" :key="i" @click="loadCropper(file)">
+        {{ file.name }} 
+        <span v-if="hasThumbnail.includes(file.name)">✔</span>
+      </div>
     </div>
   </div>
-
-  <div>
-    <div class="item" v-for="(file, i) in files" :key="i" @click="loadCropper(file)">
-      {{ file.name }} 
-      <span v-if="hasThumbnail.includes(file.name)">✔</span>
+  <div class="image-pane">
+    <div>
+      <div v-if="editing">
+        <button @click="crop">Save Thumbnail</button>
+      </div>
     </div>
+    <img id="image" />
   </div>
 </template>
 
@@ -114,9 +117,12 @@ export default {
 <style scoped>
 .item{
   cursor: pointer;
+  padding: 0.25em 0.5em;
+  font-size: 14px;
+  color: rgb(64, 99, 95);
 }
 .item:hover{
-  background: #AAA;
+  background: rgb(184, 202, 196);
 }
 a {
   color: #42b983;
@@ -125,6 +131,13 @@ img {
   display: block;
   max-width: 100%;
   max-height: 400px;
+}
+.file-pane{
+  width: 300px;
+}
+.image-pane{
+  flex: 1;
+  background: #333;
 }
 </style>
 
