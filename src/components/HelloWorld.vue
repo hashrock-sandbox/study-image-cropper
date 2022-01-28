@@ -40,17 +40,18 @@ export default {
         const _result = reader.result;
         const image = new Image();
         image.src = _result;
-        const canvas = document.createElement("canvas");
-        canvas.width = 100;
-        canvas.height = 100;
+        const canvas = new OffscreenCanvas(100, 100)
+        // canvas.width = 100;
+        // canvas.height = 100;
         const ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = true;
         ctx.drawImage(image, 0, 0, 100, 100);
-        document.body.appendChild(canvas)
+        // document.body.appendChild(canvas)
         // var imageData = ctx.getImageData(0, 0, 100, 100);
         // var buffer = imageData.data.buffer;
-        canvas.toBlob((blob)=>{
-          saveImageData(blob, this.parent);
-        })
+        const blob = await canvas.convertToBlob()
+        console.log(blob)
+        saveImageData(blob, this.parent);
       };
       reader.readAsDataURL(await f.getFile());
     },
