@@ -1,10 +1,10 @@
 <template>
   <div class="file-pane">
     <button @click="openDir">Open Dir</button>
-    <div>
+    <div class="items">
       <div class="item" v-for="(file, i) in files" :key="i" @click="loadCropper(file)">
         {{ file.name }} 
-        <span v-if="hasThumbnail.includes(file.name)">✔</span>
+        <span v-if="hasThumbnail.includes(file.name.replace(/\.(png|jpg|jpeg)/))">✔</span>
       </div>
     </div>
   </div>
@@ -100,7 +100,7 @@ export default {
   },
   computed: {
     hasThumbnail(){
-      return this.thumbs.map(i => i.name.replace(".thumb.png", ".png"))
+      return this.thumbs.map(i => i.name.replace(".thumb.png", ""))
     }
   },
   mounted() {
@@ -115,6 +115,10 @@ export default {
 </script>
 
 <style scoped>
+.items{
+  overflow-y: scroll;
+  flex:1;
+}
 .item{
   cursor: pointer;
   padding: 0.25em 0.5em;
@@ -134,6 +138,8 @@ img {
 }
 .file-pane{
   width: 300px;
+  display: flex;
+  flex-direction: column;
 }
 .image-pane{
   flex: 1;
