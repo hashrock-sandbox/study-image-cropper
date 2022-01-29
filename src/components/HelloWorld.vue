@@ -144,6 +144,9 @@ img {
 .image-pane{
   flex: 1;
   background: #333;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 </style>
 
